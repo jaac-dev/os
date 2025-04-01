@@ -32,11 +32,23 @@ bi_reserved:
     incw %ax
     pushw %ax
 
-    pushw $0x1
+    movw (bi_length), %ax
+    movw $0x800, %bx
+    divw %bx
+
+    xor %ah, %ah
+    pushw %ax
+
     pushw $0x840
     pushw $0x0
     call read_sectors
     add $0x8, %sp
+
+2:
+    hlt
+    jmp 2b
+
+    jmp _load
 
 2:
     hlt

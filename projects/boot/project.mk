@@ -3,6 +3,8 @@ BOOT_OBJ :=
 
 ifeq ($(ARCH),x86_64-elf)
 
+BOOT_OBJ += $(OUT)/$(BOOT_ROOT)/src/arch/x86_64/load.stage2.o
+
 CD_BOOT_OBJ := $(BOOT_OBJ)
 CD_BOOT_OBJ += $(OUT)/$(BOOT_ROOT)/src/arch/x86_64/cd.stage1.o
 
@@ -19,7 +21,7 @@ $(CD_BOOT_TARGET): $(CD_BOOT_OBJ)
   		-nostartfiles \
   		-nolibc \
   		-T $(BOOT_ROOT)/x86_64.ld \
-  		$< \
+  		$^ \
   		-o $@
 
 .PHONY: cd-boot
