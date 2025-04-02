@@ -19,6 +19,7 @@ $(CD_TARGET): $(CD_FOLDER_BOOT)
 		-map $(CD_FOLDER) / \
 		-volid CD \
 		-boot_image any bin_path=/BOOT.BIN \
+		-boot_image any cat_path=/BOOT.CAT \
 		-boot_image any load_size=2048 \
 		-boot_image any boot_info_table=on \
 		-boot_image any emul_type=no_emulation \

@@ -2,17 +2,10 @@ include make/root.mk
 
 all: $(CD_TARGET)
 
-# QEMU emulation target.
-.PHONY: qemu
-qemu: $(CD_TARGET)
-	$(V)$(QEMU) -cdrom $(CD_TARGET)
-
-# QEMU debug emulation target.
-.PHONY: qemu-d
-qemu-d: $(CD_TARGET)
-	$(V)$(QEMU) -s -S -cdrom $(CD_TARGET)
-
-# GDB remote target.
-.PHONY: gdb
-gdb:
-	$(V)$(GDB) -ex "target remote localhost:1234"
+# Bochs Emulation
+.PHONY: bochs
+bochs: $(CD_TARGET)
+	$(V)bochs -q \
+		'ata0: enabled=1, ioaddr1=0x1f0, ioaddr2=0x3f0, irq=14' \
+		'ata0-slave: type=cdrom, path=$(CD_TARGET), status=inserted' \
+		'boot: cdrom'
